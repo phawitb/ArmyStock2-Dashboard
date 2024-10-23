@@ -100,8 +100,8 @@ styled_df = df.style.apply(highlight_online, axis=1)
 st.dataframe(
     styled_df,
     column_config={
-        "url": st.column_config.LinkColumn("Trending apps"),
-        "sheet_url": st.column_config.LinkColumn("Trending apps")
+        "url": st.column_config.LinkColumn("url"),
+        "sheet_url": st.column_config.LinkColumn("sheet_url")
     },
     hide_index=True,
 )
