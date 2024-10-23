@@ -26,12 +26,29 @@ st.markdown("""
         """, unsafe_allow_html=True)
 
 # Function to check if a URL is online
+# def check_url(url):
+#     try:
+#         response = requests.get(url)
+#         return True
+#     except:
+#         return False
+
 def check_url(url):
     try:
         response = requests.get(url)
-        return True
-    except:
+        if response.status_code == 200:
+            # return "The ngrok tunnel is working."
+            return True
+        elif 'ERR_NGROK_3200' in response.text:
+            # return "Ngrok tunnel not found (ERR_NGROK_3200)."
+            return False
+        else:
+            # return f"The URL returned status code {response.status_code}."
+            return False
+    except requests.exceptions.RequestException as e:
+        # return f"An error occurred: {e}"
         return False
+
 
 # Function to fetch and return DataFrame from the API
 def get_all_df():
@@ -83,8 +100,8 @@ styled_df = df.style.apply(highlight_online, axis=1)
 st.dataframe(
     styled_df,
     column_config={
-        "url": st.column_config.LinkColumn("url"),
-        "sheet_url": st.column_config.LinkColumn("data_sheet_url")
+        "url": st.column_config.LinkColumn("Trending apps"),
+        "sheet_url": st.column_config.LinkColumn("Trending apps")
     },
     hide_index=True,
 )
